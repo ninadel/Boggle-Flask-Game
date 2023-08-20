@@ -1,29 +1,15 @@
 class BoggleGame {
-  constructor(timerDuration = 60) {
-    this.timerDuration = timerDuration;
-    this.words = new Set();
+  constructor(secs = 60) {
+    this.secs = secs; // game length
+    this.showTimer();
+
     this.score = 0;
-    this.playing = true;
-    // create form and append to webpage
-    // add a submit handler on form
-    $(".add-word", this.board).on("submit", this.handleSubmit.bind(this));
-  }
+    this.words = new Set();
 
-  checkWord() {
-    // if valid input, check if duplicate
-    // if not duplicate, talk to flask API to check word
-    // if valid word, update list, calculate and update score
-  }
+    // every 1000 msec, "tick"
+    this.timer = setInterval(this.tick.bind(this), 1000);
 
-  toggleMessage(message, display = true) {}
-
-  updateTimer() {
-    // update displayed time on webpage
-    // end game if timer is expired
-  }
-
-  endGame() {
-    // disable event handlers if timer is
+    $(".add-word").on("submit", this.handleSubmit.bind(this));
   }
 
   updateGameStats() {
@@ -50,7 +36,7 @@ class BoggleGame {
   async handleSubmit(evt) {
     evt.preventDefault();
     // create a jquery object for the word form input
-    const $word = $(".word", this.board);
+    const $word = $(".word");
     // get the word entered in the input field
     let word = $word.val();
     // if there's no word
@@ -67,13 +53,29 @@ class BoggleGame {
     const response = await axios.get("/check-word", { params: { word: word } });
     console.log(response["data"]["result"]);
     console.log("handleSubmit", word);
-    if (response["data"]["result"] == "ok") {
+    if ((response["data"]["result"] == "ok") & (this.secs > 0)) {
       $("ul").append($("<li>").append(word));
       this.score += word.length;
       $("#current-score").html(this.score);
       this.words.add(word);
     }
     $word.val("").focus();
+  }
+
+  showTimer() {
+    $("#timer").text(this.secs);
+  }
+
+  /* Tick: handle a second passing in game */
+
+  async tick() {
+    this.secs -= 1;
+    this.showTimer();
+
+    if (this.secs === 0) {
+      clearInterval(this.timer);
+      await this.scoreGame();
+    }
   }
 }
 

@@ -22,10 +22,10 @@
       <div id="game-stats">
         <!-- keep track of game statistics -->
         <h2>Stats</h2>
-        <div id="game-timer">Timer</div>
+        <div id="game-timer">Timer: <span id="timer">60</span></div>
         <div id="game-count">Game count {{game_count}}</div>
         <div id="high-score">High score {{high_score}}</div>
-        <div id="score">Score <span id="current-score">0</span></div>
+        <div id="score">Score: <span id="current-score">0</span></div>
       </div>
       <div id="game-form">
         <form method="POST" class="add-word">
@@ -46,6 +46,6 @@
   <script src="{{url_for('static', filename='script.js')}}"></script>
 
   <script>
-    let game = new BoggleGame("boggle", 60);
+    let game = new BoggleGame(60);
   </script>
 </html>
