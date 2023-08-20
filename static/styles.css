@@ -1,9 +1,52 @@
 body {
 }
 
+h1 {
+  display: block;
+  width: 800px;
+}
+
 #game-container {
+  /* display: flex;
+  flex-direction: row; */
   display: block;
   position: relative;
+  margin: auto;
+  width: 800px;
+  padding: 0px;
+}
+
+#gameboard {
+  display: relative;
+  float: left;
+  width: 475px;
+  margin: 0px;
+  padding: 0px;
+}
+
+#letters {
+  width: 100%;
+}
+
+#game-words {
+  display: relative;
+  margin: auto;
+  padding: 0px;
+}
+
+#game-form {
+  display: relative;
+  margin: 20px 20px;
+  /* padding: 0px; */
+}
+
+#game-timer {
+  display: relative;
+  width: 775px;
+}
+
+#game-stats {
+  width: 800px;
   margin: auto;
 }
 

@@ -49,17 +49,36 @@ class BoggleGame {
   // update stats
   async handleSubmit(evt) {
     evt.preventDefault();
-    console.group("handleSubmit");
     // create a jquery object for the word form input
     const $word = $(".word", this.board);
     // get the word entered in the input field
     let word = $word.val();
     // if there's no word
-    if (!word) return;
-    // if word is already in the set
-    if (this.words.has(word)) {
-      this.showMessage(`Already found ${word}`, "err");
+    if (!word) {
+      $word.val("").focus();
       return;
     }
+    // if word is already in the set
+    if (this.words.has(word)) {
+      // this.showMessage(`Already found ${word}`, "err");
+      $word.val("").focus();
+      return;
+    }
+    const response = await axios.get("/check-word", { params: { word: word } });
+    console.log(response["data"]["result"]);
+    console.log("handleSubmit", word);
+    if (response["data"]["result"] == "ok") {
+      $("ul").append($("<li>").append(word));
+      this.score += word.length;
+      $("#current-score").html(this.score);
+      this.words.add(word);
+    }
+    $word.val("").focus();
   }
 }
+
+// ('#content ul').append(
+//   $('<li>').append(
+//       $('<a>').attr('href','/user/messages').append(
+//           $('<span>').attr('class', 'tab').append("Message center")
+// )));

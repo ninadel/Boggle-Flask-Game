@@ -35,13 +35,13 @@ def get_current_board():
 # with board and word as arguments
 @app.route('/check-word')
 def check_word():
-    """checks submitted word and returns result"""
+    """Check if word is in dictionary."""
+
     word = request.args["word"]
     board = session["board"]
     response = boggle_game.check_valid_word(board, word)
 
     return jsonify({'result': response})
-
 
 # route to check score
 # receives last game score from front end, checks against session high score

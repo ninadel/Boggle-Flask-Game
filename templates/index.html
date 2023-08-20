@@ -5,31 +5,39 @@
     <link rel="stylesheet" href="/static/styles.css" />
   </head>
   <body>
-    <h1>Let's play boggle</h1>
-    <div id="game-container">
-      <div id="game-timer">Timer</div>
-      <table id="gameboard">
-        {% for row in board %}
-        <tr class="row">
-          {% for col in row %}
-          <td class="letter">{{col}}</td>
+    <section id="game-container">
+      <h1>Let's play boggle</h1>
+      <div id="gameboard">
+        <table id="letters">
+          {% for row in board %}
+          <tr class="row">
+            {% for col in row %}
+            <td class="letter">{{col}}</td>
+            {% endfor %}
+          </tr>
           {% endfor %}
-        </tr>
-        {% endfor %}
-      </table>
+        </table>
+      </div>
+      <!-- form controls will be appended to div with js -->
+      <div id="game-stats">
+        <!-- keep track of game statistics -->
+        <h2>Stats</h2>
+        <div id="game-timer">Timer</div>
+        <div id="game-count">Game count {{game_count}}</div>
+        <div id="high-score">High score {{high_score}}</div>
+        <div id="score">Score <span id="current-score">0</span></div>
+      </div>
       <div id="game-form">
         <form method="POST" class="add-word">
           <input name="word" class="word" autofocus />
           <button>Enter</button>
         </form>
       </div>
-      <div id="game-stats">
-        <!-- keep track of game statistics -->
-        <div id="game-count">Game count {{game_count}}</div>
-        <div id="high-score">High score {{high_score}}</div>
+      <div id="game-words">
+        <h2>Words</h2>
+        <ul id="#word-list"></ul>
       </div>
-      <!-- form controls will be appended to div with js -->
-    </div>
+    </section>
   </body>
 
   <script src="http://unpkg.com/jquery"></script>
