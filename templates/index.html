@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Boggle Game</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <h1>Let's play boggle</h1>
+    <div id="game-container">
+      <div id="game-timer">Timer</div>
+      <table id="gameboard">
+        {% for row in board %}
+        <tr class="row">
+          {% for col in row %}
+          <td class="letter">{{col}}</td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </table>
+      <div id="game-form">
+        <form method="POST" class="add-word">
+          <input name="word" class="word" autofocus />
+          <button>Enter</button>
+        </form>
+      </div>
+      <div id="game-stats">
+        <!-- keep track of game statistics -->
+        <div id="game-count">Game count {{game_count}}</div>
+        <div id="high-score">High score {{high_score}}</div>
+      </div>
+      <!-- form controls will be appended to div with js -->
+    </div>
+  </body>
+
+  <script src="http://unpkg.com/jquery"></script>
+  <script src="https://unpkg.com/axios@0.19.0/dist/axios.js"></script>
+  <script src="{{url_for('static', filename='boggle.js')}}"></script>
+  <script src="{{url_for('static', filename='script.js')}}"></script>
+
+  <script>
+    let game = new BoggleGame("boggle", 60);
+  </script>
+</html>

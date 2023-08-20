@@ -1,0 +1,14 @@
+body {
+}
+
+#game-container {
+  display: block;
+  position: relative;
+  margin: auto;
+}
+
+td {
+  height: 5rem;
+  width: 5rem;
+  font-size: 3rem;
+}
